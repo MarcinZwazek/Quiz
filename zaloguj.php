@@ -28,10 +28,6 @@
 			$_SESSION['uzytkownik'] =1;
 			header("Location: Quiz.php");
 		}
-		
 
-	
-	
-	
 	}
 ?>

@@ -62,12 +62,29 @@
     .tekst
     {
       
-           background-image: url("background2.png");
+     background-color: lightgrey;
+      color: green;
+      text-align: center;
 
     }
     .buttons
     {
       width: 15rem;
+    }
+    .pytanka
+    {
+      color: black;
+      font-family: 'Spicy Rice', cursive;
+      font-size: 3.5rem;
+      text-align: center;
+      background-color: lightgrey;
+
+
+    }
+    .odpowiedz
+    {
+      margin: 2rem;
+     font-size: 2rem; 
     }
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {

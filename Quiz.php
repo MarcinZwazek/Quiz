@@ -1,51 +1,29 @@
 <?php
-require_once("Pytania.php");
-$Pytanie = new Pytania(); 
-$q = $_REQUEST['q'];
+  session_start();
+  $q = $_REQUEST['q'];
+  $_SESSION['Kategoria']=$q;;
   //UZYSKANIE ID z bazy wybranej kategorii
-  $dbConnect=new mysqli('localhost','BOSS','boss4321','db_gra');
-    $zapytanie="SELECT ID FROM Category WHERE Name='".$q."'";
-    $wynik =$dbConnect->query($zapytanie);
-    $wiersz=$wynik->fetch_assoc();
-     $ID=$wiersz['ID'];
-    $wynik->free();
-    $dbConnect->close();
+   require_once("OperacjeNaBazie.php");
+   $OperacjeNaBazie=new OperacjeNaBazie();
+   $ID=$OperacjeNaBazie->zwrocIDKategorii($q);
    
-
+   $Pytanie=$OperacjeNaBazie->zwrocPytanieZKategorii($ID);
     //UZYSKANIE PYTANIA z bazy
-    $dbConnect=new mysqli('localhost','BOSS','boss4321','db_gra');
-    $zapytanie="SELECT * FROM Questions WHERE ID_FK_Category='".$ID."'";
-    $wynik =$dbConnect->query($zapytanie);
-    $tablicaPytan=array();
-    $ile=$wynik->num_rows;
-     $idPytania=$Pytanie->losuj($ile);
-    
-    for($a=0;$a<$ile;$a++)
-    {
-      $wiersz=$wynik->fetch_assoc(); 
-      $Pytanie->ID=$wiersz['IDQuestion'];
-      $Pytanie->Pytanie=$wiersz['Pytanie'];
-      $Pytanie->OdpowiedzA=$wiersz['OdpowiedzA']; 
-      $Pytanie->OdpowiedzB=$wiersz['OdpowiedzB']; 
-      $Pytanie->OdpowiedzC=$wiersz['OdpowiedzC']; 
-      $Pytanie->OdpowiedzD=$wiersz['OdpowiedzD']; 
-      $Pytanie->Prawidlowa=$wiersz['Prawidlowa'];
-      $tablicaPytan[$a]=$Pytanie;
 
-    }
-   
-   echo count($tablicaPytan);
-    
-   
-   
-  
-
-   
-  //  echo $wiersz['Pytanie'];
-    $wynik->free();
-    $dbConnect->close();
-
-  
 ?>
-  
-  
+       <section class="pytanka">  
+        <?php echo $Pytanie->Pytanie;?>
+        <div class="odpowiedz">
+          <form action="wynik.php" method="POST" name="myForm">
+         <label><input type="radio"  name="optradio"  value="OdpowiedzA"><?php echo $Pytanie->OdpowiedzA;?></label> <br />
+         <label><input type="radio"  name="optradio" value="OdpowiedzB"><?php echo $Pytanie->OdpowiedzB;?></label> <br />
+         <label><input type="radio"  name="optradio" value="OdpowiedzC"><?php echo $Pytanie->OdpowiedzC;?></label> <br />
+         <label><input type="radio" name="optradio" value="OdpowiedzD"><?php echo $Pytanie->OdpowiedzD;?></label> <br />
+         <br />
+         <input type="button"  name="submit" onclick="showAnswers()"  value="Następne">
+       </form>
+       </div>
+       </section>
+
+
+ 

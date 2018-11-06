@@ -9,6 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Charmonman" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css?family=Spicy+Rice" rel="stylesheet">
   <script src="sprawdzLogowanie.js" type="text/javascript" ></script>
   <link rel="stylesheet" href="style.css">
   <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -31,7 +32,7 @@
   }
   xmlhttp.open("GET","Kategorie.php",true);
   xmlhttp.send();
-}
+  }
 // Tutaj Ajax obsługa pytań
 function showQuestions(str)
     {
@@ -51,6 +52,28 @@ function showQuestions(str)
   xmlhttp.open("GET","Quiz.php?q="+str,true);
   xmlhttp.send();
 }
+
+function showAnswers()
+    {
+      if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();
+    }
+    else
+    { // code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+      xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("main").innerHTML=this.responseText;
+    }
+  }
+  
+  xmlhttp.open("GET","Wynik.php",true);
+  xmlhttp.send();
+
+}
+
 </script>
 
 </head>
@@ -155,8 +178,28 @@ function showQuestions(str)
       </div>
     </div>
 
-      <div class="col-sm-8 text-left tekst" id="main"> 
-       <section class="tekst" style="height: 700px;">  
+      <div class="col-sm-8 text-left tekst" id="main" style="height: 700px;"> 
+       <section class="tekst"> 
+        <h3>Witaj</h3>
+        <p> Tą stronę poświęcę quizom. Każdy chyba zna quizy działają na bardzo prostej zasadzie pytanie odpowiedz.<br /> W tych quizach odpowiedzi nigdy nie możesz być pewien zazwyczaj bywa tak że wszystkie pasują do odpowiedzi,ale tak naprawdę <strong>Jest tylko jedna</strong><br /> </p>
+        <br />
+
+        <h3>Instrukcja</h3><br />
+
+          <ul>
+            <li> Załóż konto aby mieć dostęp do wyników uzyskanych przez Ciebie i Twoich znajomych</li>
+            <li> Zaloguj się aby mięc dostęp do Twoja konta możesz zmienić hasło, dodać pytanie bądz kategorię </li>
+            <li> Wybierz kategorię pytania, możesz też wybrać same pytania które będą losowane przypadkowo </li>
+            <li> Baw się dobrze </li>
+          </ul>
+
+          <br />
+          <p><STRONG>POWODZENIA</STRONG></p>
+
+
+
+
+       </section>
       </div>
     <div class="col-sm-2 sidenav " >
       <div class="well">
