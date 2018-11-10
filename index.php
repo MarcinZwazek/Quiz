@@ -1,4 +1,15 @@
+<?php
 
+session_start();
+if(isset($_SESSION['uzytkownik']))
+{
+  $zalogowany= $_SESSION['uzytkownik'];
+}
+else
+{
+  $zalogowany="Konto";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,8 +96,10 @@ function showAnswers()
      <a id="header" href="index.php"> <h3 class="tytul">Quiz</h3></a>
     </div>
       <ul class="nav navbar-nav navbar-right">
+     
         <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal2">Zarejestruj</button>
         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Zaloguj</button>
+        <input type="text" name="" value=<?php echo $zalogowany;?>>
       </ul>
     </div>
   </nav>
@@ -148,7 +161,7 @@ function showAnswers()
             <br />
             <div class="g-recaptcha" data-sitekey="6Lcr5XUUAAAAAFyu5-I3KSPQKuZ1gukrM7bOaktr" id =rec></div>
             <br />
-            <input type="button" onclick="sprawdzRejestracje()" name="rejestracja" value="Zarejestruj" >
+            <input type="submit" onclick="sprawdzRejestracje()" name="rejestracja" value="Zarejestruj" >
             <div id="blad2" class="blad2"></div>
           </div>
 

@@ -5,8 +5,7 @@ function sprawdzRejestracje()
  var haslo2=document.getElementById('HasloPowtorz').value;
  var email=document.getElementById('Email').value;
   var v = grecaptcha.getResponse();
- 
-		
+
 		if(((login.length>3)&&(login.length<10))||(login.length!=0))
 		{
 			if(((haslo.length>3)&&(haslo.length<10))||(haslo.length!=0))

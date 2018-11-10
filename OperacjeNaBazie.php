@@ -89,8 +89,6 @@ class OperacjeNaBazie
   {
     require_once("config.php");
     $dbConnect=new mysqli($Serwer,$DBUser,$DBPassword,$DBName);
-
-
     if(mysqli_connect_errno())
     {
     echo "Błąd połączenia z bazą, Spróbuj ponownie później";
@@ -98,22 +96,34 @@ class OperacjeNaBazie
     } 
     else
     {
-      $zapytanie="SELECT * FROM User WHERE Login='".$login."' AND Haslo='".$haslo."'";
+      $zapytanie="SELECT * FROM uzytkownik WHERE Nazwa='".$login."'";
       $wynik =$dbConnect->query($zapytanie);
-    
       $ile=$wynik->num_rows;
-
-      if($ile==0)
+      $linia=$wynik->fetch_assoc();
+      if(password_verify($haslo,$linia['Haslo'])==true)
       {
-      header("Location: index.php"); 
+        
+         if($ile==0)
+        {
+          header("Location: index.php"); 
+  
+        }
+        else
+        {
+        session_start();
+        $_SESSION['uzytkownik'] =$login;
+        header("Location: index.php"); 
+        }
       }
       else
       {
-      session_start();
-      $_SESSION['uzytkownik'] =1;
-      header("Location: Quiz.php");
-    }
+        echo "hasła nie te same";
+      }
+    } 
+    $wynik->free();
+    $dbConnect->close(); 
   }
+
   function zarejestruj($Nazwa,$Email,$Haslo)
   {
      require_once("config.php");
@@ -125,12 +135,21 @@ class OperacjeNaBazie
     }
     else
     {
-    $hasłoZakodowane = password_hash($Haslo, PASSWORD_DEFAULT);
-    $zapytanie="INSERT INTO Uzytkownik('Nazwa','Email','Haslo') VALUES('".$Nazwa."','".$Email."','".$hasłoZakodowane."')";
-    $wynik =$dbConnect->query($zapytanie);
-    
-    $ile=$wynik->num_rows;
+     $hasloZakodowane = password_hash($Haslo, PASSWORD_DEFAULT);
+     //INSERT INTO `uzytkownik`(`IDUzytkownika`, `Nazwa`, `Email`, `Haslo`, `IDWyniku`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
+     $zapytanie="INSERT INTO `uzytkownik`(`Nazwa`, `Email`, `Haslo`) VALUES ('".$Nazwa."','".$Email."','".$hasloZakodowane."')";
+     $wynik =$dbConnect->query($zapytanie);
+     if ($wynik === TRUE)
+      {
+      echo "Konto zostało stworzone";
+      header("Location:index.php");
+      }
+      else
+       {
+      echo "Error: " . $wynik . "<br>" . $dbConnect->error;
+      }
+   
     }
+  }
  }
-} 
 ?>
