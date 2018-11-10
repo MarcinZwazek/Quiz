@@ -1,10 +1,13 @@
 <?php
+
   session_start();
 	$q= $_SESSION['Kategoria'];
+	
   //UZYSKANIE ID z bazy wybranej kategorii
    require_once("OperacjeNaBazie.php");
    $OperacjeNaBazie=new OperacjeNaBazie();
    $ID=$OperacjeNaBazie->zwrocIDKategorii($q);
+  
    $Pytanie=$OperacjeNaBazie->zwrocPytanieZKategorii($ID);
     //UZYSKANIE PYTANIA z bazy
 ?>

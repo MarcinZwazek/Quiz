@@ -1,7 +1,6 @@
 function sprawdz()
 		{
 			//WALIDACJA PODSTAWOWA LOGINU
-			
 			var loginCheck = document.getElementById('login').value;
 			const tekst=loginCheck;
 			const reg=new RegExp("[a-z]*[0-9]","i");

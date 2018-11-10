@@ -86,6 +86,10 @@
       margin: 2rem;
      font-size: 2rem; 
     }
+    .blad2
+    {
+      color: red;
+    }
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {

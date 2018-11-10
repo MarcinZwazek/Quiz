@@ -45,10 +45,9 @@ class OperacjeNaBazie
 	//Zwracamy pytania z danej kategorii
 	function zwrocPytanieZKategorii($ID)
 	{
-	require("config.php");
-	require("Pytania.php");
-
-	$dbConnect1=new mysqli($Serwer,$DBUser,$DBPassword,$DBName);
+	 require("config.php");
+	 require("Pytania.php");
+	 $dbConnect1=new mysqli($Serwer,$DBUser,$DBPassword,$DBName);
     $zapytanie1="SELECT * FROM pytania WHERE IDKategorii='".$ID."'";
     $wynik =$dbConnect1->query($zapytanie1);
     $ile=$wynik->num_rows;
@@ -81,9 +80,57 @@ class OperacjeNaBazie
       if($tablicaPytan[$a]->ID==$idPytania)
       {
          $tablicaPytan[$a]->Pytanie;
+       
          return $tablicaPytan[$a];
       }
     } 
 	}
+  function zaloguj($login,$haslo)
+  {
+    require_once("config.php");
+    $dbConnect=new mysqli($Serwer,$DBUser,$DBPassword,$DBName);
+
+
+    if(mysqli_connect_errno())
+    {
+    echo "Błąd połączenia z bazą, Spróbuj ponownie później";
+    exit;
+    } 
+    else
+    {
+      $zapytanie="SELECT * FROM User WHERE Login='".$login."' AND Haslo='".$haslo."'";
+      $wynik =$dbConnect->query($zapytanie);
+    
+      $ile=$wynik->num_rows;
+
+      if($ile==0)
+      {
+      header("Location: index.php"); 
+      }
+      else
+      {
+      session_start();
+      $_SESSION['uzytkownik'] =1;
+      header("Location: Quiz.php");
+    }
+  }
+  function zarejestruj($Nazwa,$Email,$Haslo)
+  {
+     require_once("config.php");
+     $dbConnect=new mysqli($Serwer,$DBUser,$DBPassword,$DBName);
+    if(mysqli_connect_errno())
+    {
+      echo "Błąd połączenia z bazą, Spróbuj ponownie później";
+      exit;
+    }
+    else
+    {
+    $hasłoZakodowane = password_hash($Haslo, PASSWORD_DEFAULT);
+    $zapytanie="INSERT INTO Uzytkownik('Nazwa','Email','Haslo') VALUES('".$Nazwa."','".$Email."','".$hasłoZakodowane."')";
+    $wynik =$dbConnect->query($zapytanie);
+    
+    $ile=$wynik->num_rows;
+    }
+ }
 } 
 ?>

@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css?family=Charmonman" rel="stylesheet"> 
   <link href="https://fonts.googleapis.com/css?family=Spicy+Rice" rel="stylesheet">
   <script src="sprawdzLogowanie.js" type="text/javascript" ></script>
+   <script src="sprawdzRejestrację.js" type="text/javascript" ></script>
   <link rel="stylesheet" href="style.css">
   <script src='https://www.google.com/recaptcha/api.js'></script>
   <script type="text/javascript">
@@ -125,28 +126,32 @@ function showAnswers()
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Zarejestruj Konto</h4>
+          <p>Rejestracja konta umożliwi Ci oglądanie wyników, ilości prawidłowych odpowiedzi oraz podgląd rankingu</p>
         </div>
         <div class="modal-body">
           <!--Formularz rejestracji -->
-         <form method="POST" id="formularz" action="Zarejestruj.php" >
+         <form method="POST" id="rejestracja" action="Rejestracja.php" >
           <div class="rejestracja">
             <label>Login</label><br />
-            <input type="text" name="login" id="login" />
+            <input type="text" name="login" id="Nazwa" />
             <br />
             <label>Haslo</label>
             <br />
-            <input type="password" name="haslo" id="haslo"/>
+            <input type="text" name="haslo" id="Haslo"/>
             <br />
             <label>Powtórz hasło</label><br />
-            <input type="text" name="powtorzHaslo" id="haslo" />
+            <input type="text" name="powtorzHaslo" id="HasloPowtorz" />
             <br />
             <label>E-mail</label><br />
-            <input type="text" name="email" id="login" />
+            <input type="email" name="email" id="Email" />
             <br />
             <br />
-            <div class="g-recaptcha" data-sitekey="6Lcr5XUUAAAAAFyu5-I3KSPQKuZ1gukrM7bOaktr"></div>
-            <input type="button" name="rejestracja" value="Zarejestruj" onclick="sprawdzRejestracje()">  
+            <div class="g-recaptcha" data-sitekey="6Lcr5XUUAAAAAFyu5-I3KSPQKuZ1gukrM7bOaktr" id =rec></div>
+            <br />
+            <input type="button" onclick="sprawdzRejestracje()" name="rejestracja" value="Zarejestruj" >
+            <div id="blad2" class="blad2"></div>
           </div>
+
         </form>
       </div>
         <div class="modal-footer">
