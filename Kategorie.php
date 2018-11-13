@@ -11,6 +11,8 @@
         if($tablicaKategorii[0]=="Brak Kategorii")
         {
              echo  "<input type='submit' Name='a' id='kategoria1' class='btn btn-danger btn-lg item-menu buttons' disabled value='Brak Kategorii'></button><br />";
+             
+             $tablicaKategorii[0]="";
 
         }
         else

@@ -56,11 +56,11 @@ class OperacjeNaBazie
     if($ile<1)
     {
       $idPytania=0;
-      echo "BRAK PYTAN";
     }
-   
-    for($a=0;$a<$ile;$a++)
+    else
     {
+      for($a=0;$a<$ile;$a++)
+      {
       $Pytanie = new Pytania(); 
       $wiersz=$wynik->fetch_assoc(); 
       $Pytanie->ID=$wiersz['IDPytania'];
@@ -71,20 +71,63 @@ class OperacjeNaBazie
       $Pytanie->OdpowiedzD=$wiersz['OdpowiedzD']; 
       $Pytanie->Prawidlowa=$wiersz['Prawidlowa'];
       $tablicaPytan[$a]=$Pytanie;
-    }
-    $wynik->free();
-    $dbConnect1->close();
-    $idPytania=$Pytanie->losuj($ile);
-    for($a=0;$a<count($tablicaPytan);$a++)
-    {
-      if($tablicaPytan[$a]->ID==$idPytania)
-      {
-         $tablicaPytan[$a]->Pytanie;
-       
-         return $tablicaPytan[$a];
       }
-    } 
+      $wynik->free();
+      $dbConnect1->close();
+      $idPytania=$Pytanie->losuj($ile);
+      for($a=0;$a<count($tablicaPytan);$a++)
+      {
+        if($tablicaPytan[$a]->ID==$idPytania)
+        {
+         $tablicaPytan[$a]->Pytanie;
+         return $tablicaPytan[$a];
+        }
+      }
+    }
 	}
+  function zwrocWszystkiePytania()
+  {
+    require("config.php");
+   require("Pytania.php");
+   $dbConnect1=new mysqli($Serwer,$DBUser,$DBPassword,$DBName);
+    $zapytanie1="SELECT * FROM pytania";
+    $wynik =$dbConnect1->query($zapytanie1);
+    $ile=$wynik->num_rows;
+
+    $tablicaPytan=array();
+    if($ile<1)
+    {
+      $idPytania=0;
+    }
+    else
+    {
+      for($a=0;$a<$ile;$a++)
+      {
+      $Pytanie = new Pytania(); 
+      $wiersz=$wynik->fetch_assoc(); 
+      $Pytanie->ID=$wiersz['IDPytania'];
+      $Pytanie->Pytanie=$wiersz['Pytanie'];
+      $Pytanie->OdpowiedzA=$wiersz['OdpowiedzA']; 
+      $Pytanie->OdpowiedzB=$wiersz['OdpowiedzB']; 
+      $Pytanie->OdpowiedzC=$wiersz['OdpowiedzC']; 
+      $Pytanie->OdpowiedzD=$wiersz['OdpowiedzD']; 
+      $Pytanie->Prawidlowa=$wiersz['Prawidlowa'];
+      $tablicaPytan[$a]=$Pytanie;
+      }
+      $wynik->free();
+      $dbConnect1->close();
+      $idPytania=$Pytanie->losuj($ile);
+      for($a=0;$a<count($tablicaPytan);$a++)
+      {
+        if($tablicaPytan[$a]->ID==$idPytania)
+        {
+         $tablicaPytan[$a]->Pytanie;
+         return $tablicaPytan[$a];
+        }
+      }
+    }
+
+  }
   function zaloguj($login,$haslo)
   {
     require_once("config.php");
@@ -150,6 +193,30 @@ class OperacjeNaBazie
       }
    
     }
+  }
+  function zwrocRanking()
+  {
+    require("config.php");
+    $dbConnect1=new mysqli($Serwer,$DBUser,$DBPassword,$DBName);
+    $zapytanie="SELECT * FROM wyniki";
+    $wynik =$dbConnect1->query($zapytanie);
+     $Rankingi=array();
+    if($wynik->num_rows<1)
+    {
+      $Rankingi[0]="Brak Wyników";
+    }
+   else
+   {
+     for($a=0;$a<$wynik->num_rows;$a++)
+        {
+          $wiersz=$wynik->fetch_assoc();
+          $Rankingi[$a]=$wiersz['wynik'];
+        }
+   }  
+    $wynik->free();
+    $dbConnect1->close();
+
+  return $Rankingi; 
   }
  }
 ?>

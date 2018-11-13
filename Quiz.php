@@ -1,15 +1,25 @@
 <?php
   session_start();
   $q = $_REQUEST['q'];
-  $_SESSION['Kategoria']=$q;;
+  $_SESSION['Kategoria']=$q;
   //UZYSKANIE ID z bazy wybranej kategorii
    require_once("OperacjeNaBazie.php");
    $OperacjeNaBazie=new OperacjeNaBazie();
    $ID=$OperacjeNaBazie->zwrocIDKategorii($q);
-   
+   if($ID=="")
+   {
+     $Pytanie=$OperacjeNaBazie->zwrocWszystkiePytania();
+   }
+   else
+   {
    $Pytanie=$OperacjeNaBazie->zwrocPytanieZKategorii($ID);
+   if($Pytanie==null)
+   {
+      echo "Brak pytań z wybranej kategorii";
+      return ;
+   }
     //UZYSKANIE PYTANIA z bazy
-
+}
 ?>
        <section class="pytanka">  
         <?php echo $Pytanie->Pytanie;?>

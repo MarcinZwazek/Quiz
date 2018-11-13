@@ -1,13 +1,14 @@
 <?php
-
 session_start();
 if(isset($_SESSION['uzytkownik']))
 {
   $zalogowany= $_SESSION['uzytkownik'];
+
 }
 else
 {
   $zalogowany="Konto";
+
 }
 ?>
 <!DOCTYPE html>
@@ -85,6 +86,44 @@ function showAnswers()
   xmlhttp.send();
 
 }
+function showResults()
+{
+   if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();
+    }
+    else
+    { // code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+      xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("main").innerHTML=this.responseText;
+    }
+  }
+  
+  xmlhttp.open("GET","Ranking.php",true);
+  xmlhttp.send();
+}
+function showUserInfo()
+{
+   if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();
+    }
+    else
+    { // code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+      xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("main").innerHTML=this.responseText;
+    }
+  }
+  
+  xmlhttp.open("GET","UserInfo.php",true);
+  xmlhttp.send();
+}
 
 </script>
 
@@ -98,8 +137,8 @@ function showAnswers()
       <ul class="nav navbar-nav navbar-right">
      
         <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal2">Zarejestruj</button>
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Zaloguj</button>
-        <input type="text" name="" value=<?php echo $zalogowany;?>>
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Zaloguj się</button>
+        <input class="konto" disabled="true" type="text" name="" value=<?php echo $zalogowany;?>>
       </ul>
     </div>
   </nav>
@@ -186,16 +225,15 @@ function showAnswers()
       <div class="btn-group-vertical" id="dropdown" >
            <button type="button" class="btn btn-primary btn-lg btn-block"  onclick="showCategories()">Kategorie</button>
         <button type="button" class="btn btn-primary btn-lg btn-block" onclick="showQuestions()">Pytania</button>
-        <button type="button" class="btn btn-primary btn-lg btn-block">Wyniki</button>
-        <button type="button" class="btn btn-primary btn-lg btn-block">Konto</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="showResults()">Wyniki</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="showUserInfo()">Konto</button>
       </div>
       <br />
       <div class="abaut">
         <h3>Witam </h3>
-        <p> Mam na imię Marcin<br /> Moją pasją jest informatyka, zajmuję się nią od prawie 10 lat. Potrafię naprawiać komputery od tego zaczynałem, od kilka lat tworzę strony internetowe.</p>
+        <p> Mam na imię Marcin<br /> Moją pasją jest informatyka, zajmuję się nią od prawie 10 lat. Potrafię naprawiać komputery od tego zaczynałem, od kilka lat tworzę strony internetowe.  </p>
       </div>
     </div>
-
       <div class="col-sm-8 text-left tekst" id="main" style="height: 700px;"> 
        <section class="tekst"> 
         <h3>Witaj</h3>

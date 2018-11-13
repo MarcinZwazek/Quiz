@@ -44,7 +44,7 @@
     }
     .abaut
     {
-        margin-top: 100px;
+        
        background-color: #a1a1a1;
        border-radius: 5px;
     }
@@ -89,6 +89,10 @@
     .blad2
     {
       color: red;
+    }
+    .konto
+    {
+      background-color: lightgrey;
     }
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
